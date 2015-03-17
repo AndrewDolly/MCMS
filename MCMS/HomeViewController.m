@@ -8,6 +8,7 @@
 
 #import "HomeViewController.h"
 #import "MagicalCreature.h"
+#import "CreatureViewController.h"
 
 @interface HomeViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -83,7 +84,17 @@
 
 }
 
+#pragma mark - prepare for segue
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UITableViewCell *)sender
+{
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+    MagicalCreature *creature = [self.creatures objectAtIndex:indexPath.row];
+    CreatureViewController *vc = segue.destinationViewController;
+    vc.creature = creature;
+    vc.title = creature.name;
+    
+}
 
 
 @end
