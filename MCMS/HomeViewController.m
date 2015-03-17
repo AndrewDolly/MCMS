@@ -11,6 +11,8 @@
 
 @interface HomeViewController () <UITableViewDataSource, UITableViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UITextField *creatureNameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *superpowerTextField;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -45,6 +47,41 @@
         return cell;
     }
 
+#pragma mark -IBAction
+
+- (IBAction)addNewCreature:(UIButton *)sender
+{
+
+
+    // one of the textFields is empty
+    if ([self.creatureNameTextField.text isEqualToString:@""] || [self.superpowerTextField.text isEqualToString:@""])
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning!"
+                                                        message:@"Both of fields are required!"
+                                                        delegate:self
+                                                        cancelButtonTitle:nil
+                                                        otherButtonTitles:@"Ok", nil];
+        [alert show];
+
+    }
+    else
+    {
+
+        MagicalCreature *newCreature = [[MagicalCreature alloc] initWithFullName:self.creatureNameTextField.text andSuperPower:self.superpowerTextField.text];
+
+        // array add object
+        [self.creatures addObject:newCreature];
+
+        [self.tableView reloadData];
+
+        [self.creatureNameTextField resignFirstResponder];
+
+        // clear the textField when pressed Add
+        self.creatureNameTextField.text = @"";
+        self.superpowerTextField.text = @"";
+    }
+
+}
 
 
 
